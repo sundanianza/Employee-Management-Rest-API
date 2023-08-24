@@ -50,6 +50,7 @@ public class EmployeeController {
 
         return new ResponseEntity<>(updated, HttpStatus.OK);
 
+
     }
 
     @GetMapping("/employees/{employeeId}")
@@ -63,6 +64,12 @@ public class EmployeeController {
 
     }
 
+    @DeleteMapping("/employees/{employeeId}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable Long employeeId){
+         employeeService.deleteEmployee(employeeId);
+
+         return ResponseEntity.ok("Employee Deleted Successfully!");
+    }
 
 
 }
