@@ -32,6 +32,8 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
+
+
     public Employee updateEmployee(Long employeeId, Employee updatedEmployee){
 
       Optional<Employee> existingEmployeeOptional= employeeRepository.findById(employeeId);
@@ -55,6 +57,18 @@ public class EmployeeService {
 
     public Optional<Employee> getEmployeeById(Long employeeId){
         return employeeRepository.findById(employeeId);
+    }
+
+    public void deleteEmployee(Long employeeId){
+
+       Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
+
+       if(employeeOptional.isPresent()){
+           Employee employee = employeeOptional.get();
+           employeeRepository.delete(employee);
+       }else{
+           throw  new ResourceNotFoundException("Employee with ID:"+employeeId+" is not found on the DB");
+       }
     }
 
 }
