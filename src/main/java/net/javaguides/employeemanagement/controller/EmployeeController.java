@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -48,6 +49,17 @@ public class EmployeeController {
 
 
         return new ResponseEntity<>(updated, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/employees/{employeeId}")
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long employeeId){
+       Optional<Employee> employee = employeeService.getEmployeeById(employeeId);
+
+       return employee.map(value->new ResponseEntity<>(value,HttpStatus.OK))
+               .orElseGet(()-> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
+
 
     }
 
