@@ -1,18 +1,20 @@
 package net.javaguides.employeemanagement.controller;
 
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.Operation;
 import net.javaguides.employeemanagement.model.Employee;
 import net.javaguides.employeemanagement.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@Tag(name = "Employee", description = "Employee operations")
 @RequestMapping("/api/v1/")
 public class EmployeeController {
 
@@ -27,21 +29,29 @@ public class EmployeeController {
 
     //get all Employees
 
-    @ApiOperation("Get a list of all employees")
-    @RequestMapping("/employees")
+
+
+
+
+    @PostMapping ("/employees")
+    @Operation(summary = "Create Employee")
+    public Employee createEmployee(@RequestBody Employee employee){
+        System.out.println("Received request to create employee: " + employee);
+
+
+        return employeeService.createEmployee(employee);
+    }
+    @GetMapping("/employees")
+    @Operation(summary = "Get a list of all Emp")
     public List<Employee> getAllEmployees(){
 
         return employeeService.getAllEmployees();
     }
 
-    @PostMapping ("/employees")
-    public Employee createEmployee(@RequestBody Employee employee){
-
-        return employeeService.createEmployee(employee);
-    }
 
 
     @PutMapping("/employees/{employeeId}")
+    @Operation(summary = "update an employee by ID")
     public ResponseEntity<Employee> updateEmployee(@PathVariable Long employeeId
     , @RequestBody Employee updatedEmployee){
 
@@ -53,7 +63,9 @@ public class EmployeeController {
 
     }
 
+
     @GetMapping("/employees/{employeeId}")
+    @Operation(summary = "get employee by ID")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Long employeeId){
        Optional<Employee> employee = employeeService.getEmployeeById(employeeId);
 
@@ -64,7 +76,10 @@ public class EmployeeController {
 
     }
 
+
+
     @DeleteMapping("/employees/{employeeId}")
+    @Operation(summary = "Delete employee")
     public ResponseEntity<String> deleteEmployee(@PathVariable Long employeeId){
          employeeService.deleteEmployee(employeeId);
 
