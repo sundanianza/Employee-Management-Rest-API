@@ -56,6 +56,7 @@ public class EmployeeService {
     //get en employee by ID
 
     public Optional<Employee> getEmployeeById(Long employeeId){
+
         return employeeRepository.findById(employeeId);
     }
 
@@ -70,5 +71,8 @@ public class EmployeeService {
            throw  new ResourceNotFoundException("Employee with ID:"+employeeId+" is not found on the DB");
        }
     }
+
+
+
 
 }
