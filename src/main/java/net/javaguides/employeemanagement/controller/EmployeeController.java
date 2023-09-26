@@ -28,11 +28,6 @@ public class EmployeeController {
 
 
     //get all Employees
-
-
-
-
-
     @PostMapping ("/employees")
     @Operation(summary = "Create Employee")
     public Employee createEmployee(@RequestBody Employee employee){
